@@ -197,7 +197,7 @@ $lname = $lur["Lname"];
     }
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC--IXlTmtLsD2djtToVH44G41xBhcGUu0&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key="yr api key"callback=initMap">
 </script>
 </body>
 </html>
