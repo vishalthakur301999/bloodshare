@@ -19,7 +19,18 @@ if (mysqli_num_rows($r) > 0) {
     $loginuserrow = mysqli_fetch_assoc($r);
     $fname = $loginuserrow["Fname"];
     $lname = $loginuserrow["Lname"];
+    $ulat = $loginuserrow["LAT"];
+    $ulon = $loginuserrow["LNG"];
+    $bg = $loginuserrow["bloodgroup"];
     $_SESSION["loginid"] = $loginuserrow["ID"];
+    $id = $loginuserrow["ID"];
+}
+$sqldata = "select * from donorhistory where did = '$id'";
+$r2 = mysqli_query($conn, $sqldata);
+if(mysqli_num_rows($r2)==0){
+    $q3="insert into donorhistory values('','$id','','','',0,0)";
+    $r3 = mysqli_query($conn, $q3);
+    header('Location:donorhistory.php');
 }
 ?>
 <HTML><HEAD>
@@ -42,7 +53,7 @@ if (mysqli_num_rows($r) > 0) {
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="profileedit.php">Account Settings</a>
-                    <a class="dropdown-item" href="#">Donation History</a>
+                    <a class="dropdown-item" href="donorhistory.php">Donation History</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="yourprofile.php">Your Profile</a>
                 </div>
@@ -59,7 +70,7 @@ if (mysqli_num_rows($r) > 0) {
 
 <main>
     <div class="container">
-        <div><h1 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>List of current requests</strong></h1></div>
+        <div><h1 style="padding: 2%;font-family: 'Roboto', sans-serif;">List of current requests</h1></div>
         <?php
         $servername = "localhost";
         $username = "root";
@@ -69,9 +80,16 @@ if (mysqli_num_rows($r) > 0) {
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-
+        $miles = 10;
         mysqli_select_db($conn,$db);
-        $sql = "select * from reciever";
+        $sql = "SELECT *, 
+        ( 3959 * acos( cos( radians('$ulat') ) * 
+        cos( radians( LAT ) ) * 
+        cos( radians( LNG ) - 
+        radians('$ulon') ) + 
+        sin( radians('$ulat') ) * 
+        sin( radians( LAT ) ) ) ) 
+        AS distance FROM reciever HAVING distance < '$miles' and bloodgroup like '$bg' ORDER BY distance ASC LIMIT 0, 5";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {

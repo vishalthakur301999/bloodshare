@@ -28,6 +28,11 @@ $r2 = mysqli_query($conn, $sqlrdata);
 if (mysqli_num_rows($r2) > 0) {
     $lur2 = mysqli_fetch_assoc($r2);
 }
+$sqlddata = "select * from donorhistory where did = '$rid'";
+$d2 = mysqli_query($conn, $sqlddata);
+if (mysqli_num_rows($d2) > 0) {
+    $lud2 = mysqli_fetch_assoc($d2);
+}
 $loginuname = $_SESSION["uname"];
 $loginpass = $_SESSION["pass"];
 $ut = $_SESSION["ut"];
@@ -98,6 +103,12 @@ if (mysqli_num_rows($r) > 0) {
                 echo "<tr><td>Disease / Special Condition</td><td>".$lur2["desorspc"]."</td></tr>";
                 echo "<tr><td>Description</td><td>".$lur2["reason"]."</td></tr>";
                 echo "<tr><td>Quantity required</td><td>".$lur2["bquantity"]."</td></tr>";
+                echo "<tr><td>Locality and City</td><td>".$row["Locality"]." ,".$row["City"]."</td></tr>";
+            }
+            else if(strcmp($ut,"rec")==0){
+                echo "<tr><td>Blood Group Available</td><td>".$row["bloodgroup"]."</td></tr>";
+                echo "<tr><td>Locality and City</td><td>".$row["Locality"]." ,".$row["City"]."</td></tr>";
+                echo "<tr><td>No. of previous donations</td><td>".$lud2["nofdon"]."</td></tr>";
             }
             ?></table><table>
             <tr><td>

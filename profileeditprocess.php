@@ -73,13 +73,13 @@ elseif(strcmp($ut,"rec")==0){
         mysqli_real_escape_string($conn,$city),
         mysqli_real_escape_string($conn,$type),
         mysqli_real_escape_string($conn,$lat),
-        mysqli_real_escape_string($conn,$lng));
-
+        mysqli_real_escape_string($conn,$lng),
+        mysqli_real_escape_string($conn,$Puname));
     $result = mysqli_query($conn,$query);
     if (!$result) {
         die('Invalid query: ' . mysqli_error($conn));
     }
-    header('Location:signupsuccess.html');
+    header('Location:recieverhome.html');
 }
 
 ?>

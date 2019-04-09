@@ -19,6 +19,7 @@ if (mysqli_num_rows($r) > 0) {
     $lname = $loginuserrow["Lname"];
     $ulat = $loginuserrow["LAT"];
     $ulon = $loginuserrow["LNG"];
+    $bg = $loginuserrow["bloodgroup"];
     $_SESSION["loginid"] = $loginuserrow["ID"];
     $id = $loginuserrow["ID"];
 }
@@ -69,7 +70,7 @@ if(mysqli_num_rows($r2)==0){
 
 <main>
     <div class="container">
-        <div><h1 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>List of available donors</strong></h1></div>
+        <div><h1 style="padding: 2%;font-family: 'Roboto', sans-serif;">List of available donors</h1></div>
         <?php
         $servername = "localhost";
         $username = "root";
@@ -79,16 +80,15 @@ if(mysqli_num_rows($r2)==0){
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-
         mysqli_select_db($conn,$db);
         $sql = "SELECT *, 
         ( 3959 * acos( cos( radians('$ulat') ) * 
-        cos( radians( LAT ) ) * 
-        cos( radians( LNG ) - 
+        cos( radians( donor.LAT ) ) * 
+        cos( radians( donor.LNG ) - 
         radians('$ulon') ) + 
         sin( radians('$ulat') ) * 
-        sin( radians( LAT ) ) ) ) 
-        AS distance FROM donor HAVING distance < '$miles' ORDER BY distance ASC LIMIT 0, 5";
+        sin( radians( donor.LAT ) ) ) ) 
+        AS distance FROM donor,donorhistory  HAVING distance < 5 and donor.bloodgroup like '$bg' and donor.ID=donorhistory.did ORDER BY prediction DESC";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {

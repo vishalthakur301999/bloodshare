@@ -36,7 +36,4 @@ if(isset($_POST['cancel'])){
     header('Location:requests.php');
 
 }
-
-
-
 ?>

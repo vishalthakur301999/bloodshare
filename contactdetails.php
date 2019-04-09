@@ -12,11 +12,42 @@ mysqli_select_db($conn,$db);
 $loginuname = $_SESSION["uname"];
 $loginpass = $_SESSION["pass"];
 $ut = $_SESSION["ut"];
+$accepteduname = $_POST["accepteduname"];
+$acceptoruname = $_POST["acceptoruname"];
+if(strcmp($loginuname,$acceptoruname)==0){
+    if(strcmp($ut,"rec")==0){
+        $sql = "select * from donor where Uname = '$accepteduname'";
+    }
+    else if(strcmp($ut,"don")==0){
+        $sql = "select * from reciever where Uname = '$accepteduname'";
+    }
+    mysqli_select_db($conn,$db);
+    $ru = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($ru) > 0) {
+        $row = mysqli_fetch_assoc($ru);
+        $rid = $row["ID"];
+    }
+}
+else if(strcmp($loginuname,$accepteduname)==0){
+    if(strcmp($ut,"rec")==0){
+        $sql = "select * from donor where Uname = '$acceptoruname'";
+    }
+    else if(strcmp($ut,"don")==0){
+        $sql = "select * from reciever where Uname = '$acceptoruname'";
+    }
+    mysqli_select_db($conn,$db);
+    $ru = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($ru) > 0) {
+        $row = mysqli_fetch_assoc($ru);
+        $rid = $row["ID"];
+    }
+}
 if(strcmp($ut,"rec")==0){
     $sqllogin = "select * from reciever where Uname = '$loginuname' and Pass = '$loginpass'";
     $link = "recieverhome";
     $data = "Receiver Details";
     $dataurl = "recieverdata.php";
+
 }
 else if(strcmp($ut,"don")==0){
     $sqllogin = "select * from donor where Uname = '$loginuname' and Pass = '$loginpass'";
@@ -24,27 +55,18 @@ else if(strcmp($ut,"don")==0){
     $data = "Donation History";
     $dataurl = "donorhistory.php";
 }
-$ru = mysqli_query($conn, $sqllogin);
-if (mysqli_num_rows($ru) > 0) {
-    $row = mysqli_fetch_assoc($ru);
-    $rid = $row["ID"];
-    $fname = $row["Fname"];
-    $lname = $row["Lname"];
+mysqli_select_db($conn,$db);
+$r = mysqli_query($conn, $sqllogin);
+if (mysqli_num_rows($r) > 0) {
+    $lur = mysqli_fetch_assoc($r);
+    $fname = $lur["Fname"];
+    $lname = $lur["Lname"];
 }
-$loginid = $_SESSION["loginid"];
-$sqlrdata = "select * from recieverdata where rid = '$loginid'";
-$r2 = mysqli_query($conn, $sqlrdata);
-if (mysqli_num_rows($r2) > 0) {
-    $lur2 = mysqli_fetch_assoc($r2);
-}
-$sqlddata = "select * from donorhistory where did = '$rid'";
-$d2 = mysqli_query($conn, $sqlddata);
-if (mysqli_num_rows($d2) > 0) {
-    $lud2 = mysqli_fetch_assoc($d2);
-}
+
+
 ?>
 <HTML><HEAD>
-    <TITLE>Your Profile</TITLE>
+    <TITLE>Donate Blood</TITLE>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="test.css" rel="stylesheet" type="text/css">
@@ -64,7 +86,7 @@ if (mysqli_num_rows($d2) > 0) {
                     <a class="dropdown-item" href="profileedit.php">Account Settings</a>
                     <a class="dropdown-item" href="<?php echo $dataurl;?>"><?php echo $data;?></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Your Profile</a>
+                    <a class="dropdown-item" href="yourprofile.php">Your Profile</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -76,7 +98,7 @@ if (mysqli_num_rows($d2) > 0) {
         </form>
     </div>
 </nav>
-<h1 align="center" style="padding: 2%;">Your Profile</h1>
+<h1 align="center" style="padding: 2%;"><strong><?php echo $row["Fname"];?>'s Contact Details</strong></h1>
 <main>
     <div class="container">
         <div class="card">
@@ -84,24 +106,23 @@ if (mysqli_num_rows($d2) > 0) {
                 <table class="table table-bordered"><tr>
                         <td>Name</td><td><?php echo $row["Fname"]." ".$row["Lname"];?></td></tr>
                     <?php
-                    if(strcmp($ut,"rec")==0){
+                    if(strcmp($ut,"don")==0){
                         echo "<tr><td>Blood Group Required</td><td>".$row["bloodgroup"]."</td></tr>";
-                        echo "<tr><td>Disease / Special Condition</td><td>".$lur2["desorspc"]."</td></tr>";
-                        echo "<tr><td>Description</td><td>".$lur2["reason"]."</td></tr>";
-                        echo "<tr><td>Quantity required</td><td>".$lur2["bquantity"]."</td></tr>";
-                        echo "<tr><td>Locality and City</td><td>".$row["Locality"].",".$row["City"]."</td></tr>";
-                    }
-                    else if(strcmp($ut,"don")==0){
-                        echo "<tr><td>Blood Group Available</td><td>".$row["bloodgroup"]."</td></tr>";
-                        echo "<tr><td>Locality and City</td><td>".$row["Locality"]." ,".$row["City"]."</td></tr>";
-                        echo "<tr><td>No. of previous donations</td><td>".$lud2["nofdon"]."</td></tr>";
-                    }
-                    ?>
-                </table>
-                <form action="<?php echo "$link";?>.php" method="post">
-                    <input type="submit" class="btn btn-success" value="Go Back">
-                </form>
+                        echo "<tr><td>Mobile Number</td><td>".$row["mobile"]."</td></tr>";
+                        echo "<tr><td>Email</td><td>".$row["email"]."</td></tr>";
+                        echo "<tr><td>Address</td><td>".$row["Address"]." ,".$row["Locality"]." ,".$row["City"]."</td></tr>";
 
+                    }
+                    else if(strcmp($ut,"rec")==0){
+                        echo "<tr><td>Blood Group Available</td><td>".$row["bloodgroup"]."</td></tr>";
+                        echo "<tr><td>Mobile Number</td><td>".$row["mobile"]."</td></tr>";
+                        echo "<tr><td>Email</td><td>".$row["email"]."</td></tr>";
+                        echo "<tr><td>Address</td><td>".$row["Address"].",".$row["Locality"].",".$row["City"]."</td></tr>";
+                    }
+                    ?></table>
+                            <form action="<?php echo "$link";?>.php" method="post">
+                                <input type="submit" class="btn btn-success" value="Go Back">
+                            </form>
             </div>
         </div>
     </div>

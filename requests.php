@@ -23,6 +23,7 @@ else if(strcmp($ut,"don")==0){
     $sqllogin = "select * from donor where Uname = '$loginuname' and Pass = '$loginpass'";
     $link = "donorhome";
     $data = "Donation History";
+    $dataurl = "donorhistory.php";
 }
 mysqli_select_db($conn,$db);
 $r = mysqli_query($conn, $sqllogin);
@@ -76,8 +77,8 @@ if (mysqli_num_rows($r) > 0) {
     <div class="container">
         <a style="padding: 0.5%">
         <div class="card"><div class="card-body">
-        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Successful Connect Requests</strong></h5></div>
-                <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect requests accepted by requested user</strong></h6></div>
+        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;">Successful Connect Requests</h5></div>
+                <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect requests accepted by requested user</h6></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
@@ -85,15 +86,19 @@ if (mysqli_num_rows($r) > 0) {
         $result = mysqli_query($conn, $qsuccess);
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<div class='card'><div class=\"card-body\">";
-                echo "Requested by $row[requesteruname] on $row[dateofreq] accepted by $row[acceptedby]";
-                echo "</div></div>";
+                echo "<div class='card'><div class='card-body'><div class='container'><div class='row'>";
+                echo "<div class='col-sm'>Requested by $row[requesteruname] on $row[dateofreq] </div>";
+                echo "<div class='col-sm'>accepted by $row[acceptedby]</div><div class='col-sm'>";
+                echo "<form action='contactdetails.php' method='post'><input type='hidden' name='id' value='$row[id]'><input type='hidden' name='accepteduname' value='$row[requesteruname]'>";
+                echo "<input type='hidden' name='acceptoruname' value='$row[requesteduname]'>";
+                echo "<button type='submit' name='vpf' class='btn btn-success btn-space' style='width: 100%'>View Contact Details</button></form>";
+                echo "</div></div></div></div></div>";
             }
         } else {
             echo "<h6 style='text-align: center'>0 results</h6>";
         }
         ?>
-        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect requests accepted by you</strong></h6></div>
+        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect requests accepted by you</h6></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
@@ -101,9 +106,13 @@ if (mysqli_num_rows($r) > 0) {
         $result = mysqli_query($conn, $qsuccess);
         if (mysqli_num_rows($result) > 0) {
               while($row = mysqli_fetch_assoc($result)) {
-                   echo "<div class='card'><div class=\"card-body\">";
-                   echo "Requested by $row[requesteruname] on $row[dateofreq] accepted by $row[requesteduname]";
-                   echo "</div></div>";
+                  echo "<div class='card'><div class='card-body'><div class='container'><div class='row'>";
+                  echo "<div class='col-sm'>Requested by $row[requesteruname] on $row[dateofreq] </div>";
+                  echo "<div class='col-sm'>accepted by $row[acceptedby]</div><div class='col-sm'>";
+                  echo "<form action='contactdetails.php' method='post'><input type='hidden' name='id' value='$row[id]'><input type='hidden' name='accepteduname' value='$row[requesteruname]'>";
+                  echo "<input type='hidden' name='acceptoruname' value='$row[requesteduname]'>";
+                  echo "<button type='submit' name='vpf' class='btn btn-success btn-space' style='width: 100%'>View Contact Details</button></form>";
+                  echo "</div></div></div></div></div>";
               }
         } else {
               echo "<h6 style='text-align: center'>0 results</h6>";
@@ -111,7 +120,7 @@ if (mysqli_num_rows($r) > 0) {
         ?>
             </div></div>
         <a style="padding: 0.5%"><div class="card"><div class="card-body">
-        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect Requests Received</strong></h5></div>
+        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect Requests Received</h5></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
@@ -136,7 +145,7 @@ if (mysqli_num_rows($r) > 0) {
         ?>
         </div></div><a style="padding: 0.5%">
         <div class="card"><div class="card-body">
-        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect Requests Sent</strong></h5></div>
+        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect Requests Sent</h5></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
@@ -147,7 +156,7 @@ if (mysqli_num_rows($r) > 0) {
                 echo "<div class='card'><div class='card-body'><div class='container'><div class='row'>";
                 echo "<div class='col-sm'>Request Sent to "."$row[requesteduname]"." on $row[dateofreq]</div>";
                 echo "<div class='col-sm'></div><div class='col-sm'>";
-                echo "<form action='reqaction.php' method='post'><input type='hidden' name='id' value='$row[id]'><input type='hidden' name='rejectuname' value='$row[requesteruname]'>\";";
+                echo "<form action='reqaction.php' method='post'><input type='hidden' name='id' value='$row[id]'><input type='hidden' name='rejectuname' value='$row[requesteruname]'>";
                 echo "<button type='submit' name='cancel' class='btn btn-danger btn-space' style='width: 100%'>Cancel</button></form>";
                 echo "</div></div></div></div></div>";
             }
@@ -157,8 +166,8 @@ if (mysqli_num_rows($r) > 0) {
         ?>
         </div></div>
         <a style="padding: 0.5%"><div class="card"><div class="card-body">
-        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect Requests Rejected / Cancelled</strong></h5></div>
-        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect requests rejected by you</strong></h6></div>
+        <div><h5 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect Requests Rejected / Cancelled</h5></div>
+        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect requests rejected by you</h6></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
@@ -175,7 +184,7 @@ if (mysqli_num_rows($r) > 0) {
         }
         ?>
 
-        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;"><strong>Connect requests Rejected</strong></h6></div>
+        <div><h6 style="padding: 2%;font-family: 'Roboto', sans-serif;">Connect requests Rejected</h6></div>
         <?php
         $conn = new mysqli($servername, $username, $password);
         mysqli_select_db($conn,$db);
