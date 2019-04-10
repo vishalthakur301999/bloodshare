@@ -1,0 +1,192 @@
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="bic.png" />
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link href="signup.css" rel="stylesheet" type="text/css">
+    <style>label{padding-top: 3%}</style>
+</head>
+<body style="background-image:url('stripes-light.png');">
+<header class="sans-serif">
+    <nav class="dt w-100 mw-100 center nbg">
+        <div class="dtc w2 v-mid pa3">
+            <a class="f3 fw4 no-underline white dib ml2 pv2 ph3" href="index.html" >BloodShare</a>
+        </div>
+        <div class="dtc v-mid tr pa3">
+            <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 ba b--white-80" href="login.html" >Sign in</a>
+        </div>
+    </nav>
+</header>
+<main class="pa4 sans-serif h-100">
+    <form class="measure center" method="post" action="signupredirect.php">
+        <div>
+            <h1 class="f1">I want to</h1>
+            <label>
+                <input type="radio" name="rdb" class="" value="reciever" checked="checked"/>
+                <article class="bg-light-gray dib br3 pa3 ma2 bw2 grow shadow-5 w-100">
+                    <div class="tc">
+                        <h1 class="f3 mb2">Request for Blood</h1>
+                    </div>
+                </article>
+            </label>
+            <label>
+                <input type="radio" name="rdb" class="" value="donor" checked="checked"/>
+                <article class="bg-light-gray dib br3 pa3 ma2 bw2 grow shadow-5 w-100">
+                    <div class="tc">
+                        <h1 class="f3 mb2">Donate Blood</h1>
+                    </div>
+                </article>
+            </label>
+        </div>
+        <div class="outer" style="padding-top: 50px;padding-bottom: 50px">
+            <div class="middle">
+                <div class="inner">
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="firstname">First Name</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="firstname" pattern="^[a-ZA-Z]$" id="firstname" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="lastname">Last Name</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="lastname" id="lastname" pattern="^[a-ZA-Z]$" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="username">Username</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username" id="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="mobile">Mobile Number</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="mobile" id="mobile" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="email">Email Address</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email" id="email" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="dob">Date of Birth</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="date" name="dob" id="dob" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required/>
+                    </div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="pass">Password</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="pass" id="pass" required/></div>
+                    <div class="mt3">
+                        <label class="db fw6 lh-copy f6" for="rpass">Repeat Password</label>
+                        <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="rpass" id="rpass" required oninput="check(this)"/><br></div>
+                    <script language='javascript' type='text/javascript'>
+                        function check(input) {
+                            if (input.value != document.getElementById('pass').value) {
+                                input.setCustomValidity('Password Must be Matching.');
+                            } else {
+                                input.setCustomValidity('');
+                            }
+                        }
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="mt3">
+        <h4 id="h1c" style="text-align: center">Select Your Location on the Map Below</h4>
+            <h2id="h1c" style="text-align: center">This map only stores your approximate coordinates, which helps us find the people closest to you.</h2></div>
+        <div id="map" style="width: 100%;height: 500px"></div>
+        <div id="ftable">
+                <button type="button" value='Save Location' class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib w-100" style="width: 100%" onclick='saveData()'>Save Location</button><br>
+                <p id="p1">Location data not yet saved.</p>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="bg">Select Your Blood Group</label>
+                    <select class="pa2 ba bg-transparent w-100" id='bg' name="bg">
+                        <option value='A+' SELECTED>A+</option>
+                        <option value='O+'>O+</option>
+                        <option value='B+'>B+</option>
+                        <option value='AB+'>AB+</option>
+                        <option value='A-'>A-</option>
+                        <option value='O-'>O-</option>
+                        <option value='B-'>B-</option>
+                        <option value='AB-'>AB-</option>
+                    </select>
+                </div>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="Address">Address</label>
+                    <input type='text' class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" id='Address' name="Address" required/>
+                </div>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="Locality">Locality</label>
+                    <input type='text' class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" id='Locality' name="Locality" required/>
+                </div>
+            <div class="mt3">
+                <label class="db fw6 lh-copy f6" for="City">City</label>
+                <input type='text' class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" id='City' name="city" required/>
+            </div>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="type">Address Type</label>
+                    <select class="pa2 ba bg-transparent w-100" id='type' name="value">
+                        <option value='Home' SELECTED>Home</option>
+                        <option value='Work'>Work</option>
+                    </select><br>
+                </div>
+                <input type="hidden" name="lat" id="elat" value="">
+                <input type="hidden" name="long" id="elong" value="">
+
+            <br><button class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib w-100" type="submit" style="width: 100%">Sign Up</button>
+        </div>
+        <div class="h3"></div>
+    </form>
+</main>
+
+<script>
+    var map;
+    var marker;
+    var infowindow;
+
+    function initMap() {
+        var california = {lat: 28.7041, lng: 77.1025};
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: california,
+            zoom: 13
+        });
+        function placeMarker(location) {
+            if ( marker ) {
+                marker.setPosition(location);
+                document.getElementById("p1").innerHTML = "Location data not yet saved.";
+            } else {
+
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+            }
+        }
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+        });
+    }
+    function saveData() {
+        var latlng = marker.getPosition();
+        var elat = document.getElementById('elat');
+        elat.value = latlng.lat();
+        var elong = document.getElementById('elong');
+        elong.value = latlng.lng();
+        document.getElementById("p1").innerHTML = "Location Saved";
+    }
+    function downloadUrl(url, callback) {
+        var request = window.ActiveXObject ?
+            new ActiveXObject('Microsoft.XMLHTTP') :
+            new XMLHttpRequest;
+
+        request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+                request.onreadystatechange = doNothing;
+                callback(request.responseText, request.status);
+            }
+        };
+
+        request.open('GET', url, true);
+        request.send(null);
+    }
+
+    function doNothing () {
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=Yourgooglemapsapikey&callback=initMap">
+</script>
+</body>
+</html>

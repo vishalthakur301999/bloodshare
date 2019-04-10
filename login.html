@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="bic.png" />
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="login.css">
+    <title>Log in</title>
+</head>
+<body style="background-image:url('stripes-light.png');">
+<header class="sans-serif">
+    <nav class="dt w-100 mw-100 center nbg">
+        <div class="dtc w2 v-mid pa3">
+            <a class="f3 fw4 no-underline white dib ml2 pv2 ph3" href="index.html" >BloodShare</a>
+        </div>
+        <div class="dtc v-mid tr pa3">
+            <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 ba b--white-80" href="signup.html" >Sign Up</a>
+        </div>
+    </nav>
+</header>
+<div class="h3"></div>
+<main class="pa4 sans-serif h-100">
+    <form class="measure center" action="connect.php" method="post">
+        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+            <h1 class="f1">Sign in</h1>
+            <div class="mt3">
+                <label class="db fw6 lh-copy f6" for="uname">Username</label>
+                <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="uname" id="uname" required>
+            </div>
+            <div class="mv3">
+                <label class="db fw6 lh-copy f6" for="pass">Password</label>
+                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="password" name="pass" id="pass" required>
+            </div>
+        </fieldset>
+        <div>
+            <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib w-100" type="submit" value="Sign in">
+        </div>
+    </form>
+</main>
+
+</body>
+</html>
