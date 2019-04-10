@@ -46,6 +46,7 @@ if (mysqli_num_rows($d2) > 0) {
 <HTML><HEAD>
     <TITLE>Your Profile</TITLE>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="bic.png" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="test.css" rel="stylesheet" type="text/css">
 </HEAD><body style="background-image:url('bg/p6_@2X.png');">

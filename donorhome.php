@@ -28,7 +28,7 @@ if (mysqli_num_rows($r) > 0) {
 $sqldata = "select * from donorhistory where did = '$id'";
 $r2 = mysqli_query($conn, $sqldata);
 if(mysqli_num_rows($r2)==0){
-    $q3="insert into donorhistory values('','$id','','','',0,0)";
+    $q3="INSERT INTO `donorhistory`(`did`, `lastdon`, `nofdon`, `firstdon`, `prediction`, `filled`) VALUES ($id,0,0,0,0,0)";
     $r3 = mysqli_query($conn, $q3);
     header('Location:donorhistory.php');
 }
@@ -36,10 +36,11 @@ if(mysqli_num_rows($r2)==0){
 <HTML><HEAD>
     <TITLE>Donate Blood</TITLE>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="bic.png" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="donorhome.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-</HEAD><body style="background-image:url('bg/p6_@2X.png');">
+</HEAD><body style="background-image:url('stripes-light.png');">
 <nav class="navbar navbar-expand-lg navbar-dark nbg">
     <a class="navbar-brand" href="donorhome.php">BloodShare</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

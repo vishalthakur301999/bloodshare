@@ -30,11 +30,13 @@ $lname = $lur["Lname"];
 <head>
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="bic.png" />
     <title>Edit Profile</title>
     <link href="signup.css" rel="stylesheet" type="text/css">
     <style>label{padding-top: 3%}</style>
 </head>
-<body style="background-image:url('bg/p6_@2X.png');">
+<body style="background-image:url('stripes-light.png');">
 <header class="sans-serif">
     <nav class="dt w-100 mw-100 center nbg">
         <div class="dtc w2 v-mid pa3">
@@ -197,7 +199,7 @@ $lname = $lur["Lname"];
     }
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key="yr api key"callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC--IXlTmtLsD2djtToVH44G41xBhcGUu0&callback=initMap">
 </script>
 </body>
 </html>
